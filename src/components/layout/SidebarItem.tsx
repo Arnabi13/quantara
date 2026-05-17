@@ -1,5 +1,3 @@
-// src/components/layout/SidebarItem.tsx
-
 import { NavLink } from 'react-router-dom'
 
 interface SidebarItemProps {
@@ -17,16 +15,20 @@ const SidebarItem = ({
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-3 rounded-2xl px-5 py-3.5 text-sm font-medium transition-all duration-200 ${
+        `group flex items-center gap-3 rounded-2xl border px-5 py-3 text-sm transition-all duration-200 ${
           isActive
-            ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-            : 'text-gray-400 hover:bg-white/5 hover:text-white'
+            ? 'border-blue-500/20 bg-blue-500/10 text-blue-400'
+            : 'border-transparent text-slate-400 hover:bg-white/5 hover:text-slate-100'
         }`
       }
     >
-      {icon}
+      <span className='transition-colors duration-200'>
+        {icon}
+      </span>
 
-      <span>{label}</span>
+      <span className='font-normal tracking-[0.01em]'>
+        {label}
+      </span>
     </NavLink>
   )
 }

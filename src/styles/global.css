@@ -6,6 +6,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  @apply border-slate-800;
 }
 
 html,
@@ -16,7 +18,22 @@ body,
 }
 
 body {
-  background: #020817;
-  color: white;
+  @apply bg-[#020817] text-slate-100 antialiased;
+
   font-family: Inter, sans-serif;
+
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
