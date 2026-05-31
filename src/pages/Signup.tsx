@@ -72,19 +72,19 @@ const Signup = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-[#020817]'>
-      
+    <div className='flex min-h-screen bg-[var(--c-base)]'>
+
       {/* Left Section */}
-      <div className='relative hidden flex-1 overflow-hidden border-r border-slate-800 bg-gradient-to-br from-[#081120] via-[#0B1120] to-[#020817] lg:flex'>
-        
+      <div className='relative hidden flex-1 overflow-hidden border-r border-[var(--c-border)] bg-gradient-to-br from-[var(--c-sidebar-from)] via-[var(--c-surface)] to-[var(--c-base)] lg:flex'>
+
         <div className='absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.15),transparent_35%)]' />
 
         <div className='relative z-10 flex flex-col justify-between p-12'>
-          
+
           {/* Brand */}
           <div>
             <div className='mb-8 flex items-center gap-4'>
-              
+
               <div className='flex h-14 w-14 items-center justify-center rounded-3xl bg-blue-500 shadow-lg shadow-blue-500/20'>
                 <BarChart3
                   className='text-white'
@@ -93,23 +93,23 @@ const Signup = () => {
               </div>
 
               <div>
-                <h1 className='text-3xl font-semibold tracking-tight text-slate-100'>
+                <h1 className='text-3xl font-semibold tracking-tight text-[var(--c-text-1)]'>
                   Quantara
                 </h1>
 
-                <p className='mt-1 text-slate-500'>
+                <p className='mt-1 text-[var(--c-text-3)]'>
                   Institutional Trading Workspace
                 </p>
               </div>
             </div>
 
             <div className='max-w-lg'>
-              
-              <h2 className='text-5xl font-semibold leading-tight text-slate-100'>
+
+              <h2 className='text-5xl font-semibold leading-tight text-[var(--c-text-1)]'>
                 Build your modern trading workspace.
               </h2>
 
-              <p className='mt-6 text-lg leading-8 text-slate-400'>
+              <p className='mt-6 text-lg leading-8 text-[var(--c-text-2)]'>
                 Quantara provides institutional-grade
                 portfolio analytics, execution
                 systems, and market intelligence
@@ -120,48 +120,48 @@ const Signup = () => {
 
           {/* Stats */}
           <div className='grid grid-cols-3 gap-4'>
-            
-            <div className='rounded-3xl border border-slate-800 bg-white/5 p-5 backdrop-blur-sm'>
+
+            <div className='rounded-3xl border border-[var(--c-border)] bg-[var(--c-overlay)] p-5 backdrop-blur-sm'>
               <TrendingUp
                 className='mb-4 text-blue-400'
                 size={22}
               />
 
-              <p className='text-2xl font-semibold text-slate-100'>
+              <p className='text-2xl font-semibold text-[var(--c-text-1)]'>
                 +18.4%
               </p>
 
-              <p className='mt-1 text-sm text-slate-500'>
+              <p className='mt-1 text-sm text-[var(--c-text-3)]'>
                 Portfolio Growth
               </p>
             </div>
 
-            <div className='rounded-3xl border border-slate-800 bg-white/5 p-5 backdrop-blur-sm'>
+            <div className='rounded-3xl border border-[var(--c-border)] bg-[var(--c-overlay)] p-5 backdrop-blur-sm'>
               <ShieldCheck
                 className='mb-4 text-emerald-400'
                 size={22}
               />
 
-              <p className='text-2xl font-semibold text-slate-100'>
+              <p className='text-2xl font-semibold text-[var(--c-text-1)]'>
                 Secure
               </p>
 
-              <p className='mt-1 text-sm text-slate-500'>
+              <p className='mt-1 text-sm text-[var(--c-text-3)]'>
                 Bank-grade protection
               </p>
             </div>
 
-            <div className='rounded-3xl border border-slate-800 bg-white/5 p-5 backdrop-blur-sm'>
+            <div className='rounded-3xl border border-[var(--c-border)] bg-[var(--c-overlay)] p-5 backdrop-blur-sm'>
               <BarChart3
                 className='mb-4 text-violet-400'
                 size={22}
               />
 
-              <p className='text-2xl font-semibold text-slate-100'>
+              <p className='text-2xl font-semibold text-[var(--c-text-1)]'>
                 Real-time
               </p>
 
-              <p className='mt-1 text-sm text-slate-500'>
+              <p className='mt-1 text-sm text-[var(--c-text-3)]'>
                 Market intelligence
               </p>
             </div>
@@ -171,20 +171,20 @@ const Signup = () => {
 
       {/* Right Section */}
       <div className='flex w-full items-center justify-center px-6 lg:w-[520px]'>
-        
+
         <div className='w-full max-w-md'>
-          
+
           <div className='mb-10'>
-            
+
             <p className='mb-3 text-sm uppercase tracking-[0.2em] text-blue-400'>
               Create Account
             </p>
 
-            <h1 className='text-4xl font-semibold tracking-tight text-slate-100'>
+            <h1 className='text-4xl font-semibold tracking-tight text-[var(--c-text-1)]'>
               Get Started
             </h1>
 
-            <p className='mt-3 text-slate-400'>
+            <p className='mt-3 text-[var(--c-text-2)]'>
               Create your Quantara workspace
             </p>
           </div>
@@ -193,11 +193,11 @@ const Signup = () => {
             onSubmit={handleSignup}
             className='space-y-5'
           >
-            
+
             <div className='grid grid-cols-2 gap-4'>
-              
+
               <div>
-                <label className='mb-2 block text-sm text-slate-400'>
+                <label className='mb-2 block text-sm text-[var(--c-text-2)]'>
                   First Name
                 </label>
 
@@ -210,12 +210,12 @@ const Signup = () => {
                     )
                   }
                   placeholder='Arnabi'
-                  className='w-full rounded-2xl border border-slate-700 bg-[#111827] px-4 py-3.5 text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-blue-500'
+                  className='w-full rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-3.5 text-[var(--c-text-1)] outline-none transition-all placeholder:text-[var(--c-text-3)] focus:border-blue-500'
                 />
               </div>
 
               <div>
-                <label className='mb-2 block text-sm text-slate-400'>
+                <label className='mb-2 block text-sm text-[var(--c-text-2)]'>
                   Last Name
                 </label>
 
@@ -228,13 +228,13 @@ const Signup = () => {
                     )
                   }
                   placeholder='Mukherjee'
-                  className='w-full rounded-2xl border border-slate-700 bg-[#111827] px-4 py-3.5 text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-blue-500'
+                  className='w-full rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-3.5 text-[var(--c-text-1)] outline-none transition-all placeholder:text-[var(--c-text-3)] focus:border-blue-500'
                 />
               </div>
             </div>
 
             <div>
-              <label className='mb-2 block text-sm text-slate-400'>
+              <label className='mb-2 block text-sm text-[var(--c-text-2)]'>
                 Email Address
               </label>
 
@@ -245,12 +245,12 @@ const Signup = () => {
                   setEmail(e.target.value)
                 }
                 placeholder='you@example.com'
-                className='w-full rounded-2xl border border-slate-700 bg-[#111827] px-4 py-3.5 text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-blue-500'
+                className='w-full rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-3.5 text-[var(--c-text-1)] outline-none transition-all placeholder:text-[var(--c-text-3)] focus:border-blue-500'
               />
             </div>
 
             <div>
-              <label className='mb-2 block text-sm text-slate-400'>
+              <label className='mb-2 block text-sm text-[var(--c-text-2)]'>
                 Password
               </label>
 
@@ -261,7 +261,7 @@ const Signup = () => {
                   setPassword(e.target.value)
                 }
                 placeholder='••••••••'
-                className='w-full rounded-2xl border border-slate-700 bg-[#111827] px-4 py-3.5 text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-blue-500'
+                className='w-full rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-3.5 text-[var(--c-text-1)] outline-none transition-all placeholder:text-[var(--c-text-3)] focus:border-blue-500'
               />
             </div>
 
@@ -276,7 +276,17 @@ const Signup = () => {
             </button>
           </form>
 
-          <p className='mt-8 text-sm text-slate-500'>
+          <p className='mt-6 text-center text-sm text-[var(--c-text-2)]'>
+            Already have an account?{' '}
+            <a
+              href='/login'
+              className='font-medium text-blue-400 transition hover:text-blue-300'
+            >
+              Sign in
+            </a>
+          </p>
+
+          <p className='mt-6 text-sm text-[var(--c-text-3)]'>
             © 2026 Quantara.
             Institutional Trading Platform.
           </p>

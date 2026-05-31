@@ -2,12 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme variables ─────────────────────────────────────── */
+
+:root {
+  /* Dark (default) */
+  --c-base:        #020817;
+  --c-surface:     #0B1120;
+  --c-surface-2:   #111827;
+  --c-surface-3:   #060E1E;
+  --c-border:      #1E293B;
+  --c-text-1:      #F8FAFC;
+  --c-text-2:      #94A3B8;
+  --c-text-3:      #6B7280;
+  --c-overlay:     rgba(255, 255, 255, 0.05);
+  --c-overlay-md:  rgba(255, 255, 255, 0.08);
+  --c-border-sub:  rgba(255, 255, 255, 0.10);
+  --c-sidebar-from: #081120;
+  --c-sidebar-to:   #050B16;
+}
+
+html.light {
+  --c-base:        #F0F4F8;
+  --c-surface:     #FFFFFF;
+  --c-surface-2:   #F8FAFC;
+  --c-surface-3:   #EEF2F7;
+  --c-border:      #E2E8F0;
+  --c-text-1:      #0F172A;
+  --c-text-2:      #475569;
+  --c-text-3:      #64748B;
+  --c-overlay:     rgba(0, 0, 0, 0.04);
+  --c-overlay-md:  rgba(0, 0, 0, 0.07);
+  --c-border-sub:  rgba(0, 0, 0, 0.08);
+  --c-sidebar-from: #E8EFF7;
+  --c-sidebar-to:   #DDE6F0;
+}
+
+/* ── Smooth theme transition ─────────────────────────────── */
+
+html {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  @apply border-slate-800;
+  border-color: var(--c-border);
 }
 
 html,
@@ -18,11 +60,12 @@ body,
 }
 
 body {
-  @apply bg-[#020817] text-slate-100 antialiased;
-
+  background-color: var(--c-base);
+  color: var(--c-text-1);
   font-family: Inter, sans-serif;
-
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::-webkit-scrollbar {
@@ -30,7 +73,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--c-border);
   border-radius: 999px;
 }
 

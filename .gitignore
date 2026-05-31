@@ -1,3 +1,27 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Environment variables — never commit real keys
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite cache
+.vite
+
+# Test coverage
+coverage
+
 # Logs
 logs
 *.log
@@ -7,16 +31,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Editor / OS
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

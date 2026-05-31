@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# Quantara — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the Quantara NSE stock market dashboard.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Tool | Version | Role |
+|---|---|---|
+| React | 19 | UI framework |
+| Vite | 8 | Build tool & dev server |
+| TypeScript | 6 | Type safety |
+| Tailwind CSS | 3 | Utility-first styling |
+| Framer Motion | 12 | Animations |
+| lightweight-charts | 5 | Candlestick / sparkline charts |
+| Zustand | 5 | Auth state |
+| React Router | v7 | Client-side routing |
+| Axios | — | API calls |
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20+
+- The backend running at `http://localhost:4000` (see `quantara-backend/`)
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# 1. Install dependencies
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# 2. Create your env file from the example
+cp .env.example .env
+# Then fill in your VITE_LOGO_DEV_KEY (get one at https://logo.dev)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+App runs at **http://localhost:5173**.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Environment Variables
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Variable | Required | Description |
+|---|---|---|
+| `VITE_LOGO_DEV_KEY` | Yes | Logo.dev public API key for company logos |
+
+> All variables must be prefixed with `VITE_` for Vite to expose them in the browser.
+
+## Available Scripts
+
+```bash
+npm run dev        # Start Vite dev server (HMR)
+npm run build      # Type-check + production build → dist/
+npm run lint       # ESLint
+npx tsc --noEmit   # Type-check without emitting
 ```
+
+## Project Structure
+
+```
+src/
+  app/
+    router.tsx          # All routes (createBrowserRouter)
+  components/
+    charts/
+      StockDetailChart.tsx   # Candlestick chart with timeframe switcher
+      Sparkline.tsx
+      MarketOverviewChart.tsx
+    dashboard/
+    layout/
+      Topbar.tsx             # Fixed top bar (height: 86px)
+      Sidebar.tsx
+    markets/
+      TickerStrip.tsx        # Auto-scrolling ticker
+      IndicesTable.tsx       # Sortable/filterable NSE stock table
+      MarketMovers.tsx       # Top Gainers / Losers / Most Active
+      SectorHeatmap.tsx      # Sector performance tiles
+      StockSidePanel.tsx     # Fixed right-side detail panel
+    ui/
+      StockAvatar.tsx        # Company logo with text fallback
+  data/
+    nseStocks.ts             # Master NSE symbol + name list
+    stockDomains.ts          # Symbol → domain map (for logos)
+    stockDataGenerator.ts    # Seeded deterministic price/OHLC data
+    marketsData.ts           # Extended data: sector, mkt cap, P/E, EPS
+  pages/
+    Dashboard.tsx
+    Markets.tsx
+    StockDetail.tsx          # /markets/:symbol
+    Watchlist.tsx
+    Portfolio.tsx
+    Settings.tsx
+    Login.tsx
+    Signup.tsx
+  store/
+    authStore.ts             # Zustand auth store
+  lib/
+    api.ts                   # Axios instance with JWT interceptor
+```
+
+## Routes
+
+| Path | Page | Auth |
+|---|---|---|
+| `/` | Dashboard | Protected |
+| `/markets` | Markets | Protected |
+| `/markets/:symbol` | Stock Detail | Protected |
+| `/watchlist` | Watchlist | Protected |
+| `/portfolio` | Portfolio | Protected |
+| `/settings` | Settings | Protected |
+| `/login` | Login | Public |
+| `/signup` | Signup | Public |
+
+## Data Layer
+
+All stock prices, charts, and fundamentals are **deterministic mock data** — no external market data API is used. The same symbol always produces the same values across renders and sessions. Only auth and watchlist are backed by a real database.
+
+## Notes
+
+- Company logos are fetched from [Logo.dev](https://logo.dev). If the API is unavailable or the key is missing, `StockAvatar` falls back to a two-letter text avatar with a deterministic color.
+- The topbar is exactly `h-[86px]` — any fixed overlays (e.g., `StockSidePanel`) must offset from `top-[86px]`.

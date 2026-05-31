@@ -18,7 +18,7 @@ const SidebarItem = ({
         `group flex items-center gap-3 rounded-2xl border px-5 py-3 text-sm transition-all duration-200 ${
           isActive
             ? 'border-blue-500/20 bg-blue-500/10 text-blue-400'
-            : 'border-transparent text-slate-400 hover:bg-white/5 hover:text-slate-100'
+            : 'border-transparent text-[var(--c-text-2)] hover:bg-[var(--c-overlay)] hover:text-[var(--c-text-1)]'
         }`
       }
     >
