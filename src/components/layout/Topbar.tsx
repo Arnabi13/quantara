@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { Bell, Search, LogOut, User, Sun, Moon } from 'lucide-react'
+import { Search, LogOut, User, Sun, Moon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import { useThemeStore } from '../../store/themeStore'
 import { api } from '../../lib/api'
+import NotificationBell from './NotificationBell'
 
 interface ProfileResponse {
   firstName?: string
@@ -51,7 +52,7 @@ const Topbar = () => {
     : ''
 
   return (
-    <header className='flex h-[86px] items-center justify-between border-b border-[var(--c-border-sub)] bg-[var(--c-surface)] px-8'>
+    <header className='flex h-[86px] items-center justify-between border-b border-[var(--c-border-sub)] bg-[var(--c-surface)] px-8 shadow-[0_1px_12px_rgba(0,0,0,0.15)]'>
 
       {/* Search */}
       <div className='relative w-[420px]'>
@@ -77,9 +78,7 @@ const Topbar = () => {
           {isDark ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <button className='flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--c-border-sub)] bg-[var(--c-surface-2)] text-[var(--c-text-2)] transition-all duration-200 hover:bg-[var(--c-border)] hover:text-[var(--c-text-1)]'>
-          <Bell size={18} />
-        </button>
+        <NotificationBell />
 
         {/* Avatar + Dropdown */}
         <div ref={dropdownRef} className='relative'>

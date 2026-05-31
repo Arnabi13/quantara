@@ -6,35 +6,35 @@
 
 :root {
   /* Dark (default) */
-  --c-base:        #020817;
-  --c-surface:     #0B1120;
-  --c-surface-2:   #111827;
-  --c-surface-3:   #060E1E;
-  --c-border:      #1E293B;
-  --c-text-1:      #F8FAFC;
-  --c-text-2:      #94A3B8;
-  --c-text-3:      #6B7280;
-  --c-overlay:     rgba(255, 255, 255, 0.05);
-  --c-overlay-md:  rgba(255, 255, 255, 0.08);
-  --c-border-sub:  rgba(255, 255, 255, 0.10);
-  --c-sidebar-from: #081120;
-  --c-sidebar-to:   #050B16;
+  --c-base:        #050C18;
+  --c-surface:     #091120;
+  --c-surface-2:   #0D1828;
+  --c-surface-3:   #040A14;
+  --c-border:      #172033;
+  --c-text-1:      #EEF4FF;
+  --c-text-2:      #8BA3BE;
+  --c-text-3:      #516070;
+  --c-overlay:     rgba(255, 255, 255, 0.045);
+  --c-overlay-md:  rgba(255, 255, 255, 0.075);
+  --c-border-sub:  rgba(255, 255, 255, 0.08);
+  --c-sidebar-from: #070F1D;
+  --c-sidebar-to:   #040A14;
 }
 
 html.light {
-  --c-base:        #F0F4F8;
-  --c-surface:     #FFFFFF;
-  --c-surface-2:   #F8FAFC;
-  --c-surface-3:   #EEF2F7;
-  --c-border:      #E2E8F0;
-  --c-text-1:      #0F172A;
-  --c-text-2:      #475569;
-  --c-text-3:      #64748B;
-  --c-overlay:     rgba(0, 0, 0, 0.04);
-  --c-overlay-md:  rgba(0, 0, 0, 0.07);
-  --c-border-sub:  rgba(0, 0, 0, 0.08);
-  --c-sidebar-from: #E8EFF7;
-  --c-sidebar-to:   #DDE6F0;
+  --c-base:        #E8EFF8;
+  --c-surface:     #F4F7FB;
+  --c-surface-2:   #EBF0F7;
+  --c-surface-3:   #DDE5F0;
+  --c-border:      #C4D0E2;
+  --c-text-1:      #0C1629;
+  --c-text-2:      #3B5170;
+  --c-text-3:      #7A93AD;
+  --c-overlay:     rgba(0, 0, 0, 0.045);
+  --c-overlay-md:  rgba(0, 0, 0, 0.075);
+  --c-border-sub:  rgba(0, 0, 0, 0.09);
+  --c-sidebar-from: #DCE7F4;
+  --c-sidebar-to:   #D0DDED;
 }
 
 /* ── Smooth theme transition ─────────────────────────────── */

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import StockDetailChart from '../charts/StockDetailChart'
 import { getExtendedStockData } from '../../data/marketsData'
 import { StockAvatar } from '../ui/StockAvatar'
+import { AlertForm } from '../ui/AlertForm'
 
 export default function StockSidePanel({
   symbol,
@@ -18,7 +19,6 @@ export default function StockSidePanel({
 }) {
   const stock = getExtendedStockData(symbol)
   const isInWatchlist = watchlistSymbols.includes(symbol)
-
   const stats = [
     { label: 'Open',       value: `₹${stock.openVal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
     { label: 'Day High',   value: `₹${stock.highVal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
@@ -107,6 +107,14 @@ export default function StockSidePanel({
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Alert section */}
+      <div className='flex-shrink-0 border-t border-amber-500/20 bg-amber-500/5 px-5 py-4'>
+        <p className='mb-3 flex items-center gap-1.5 text-xs font-semibold text-amber-400'>
+          Set Price Alert
+        </p>
+        <AlertForm symbol={symbol} currentPrice={stock.priceVal} />
       </div>
 
       {/* Footer */}

@@ -2,6 +2,8 @@ import {
   TrendingUp,
   ShieldCheck,
   BarChart3,
+  Moon,
+  Sun,
 } from 'lucide-react'
 
 import { useState } from 'react'
@@ -11,8 +13,10 @@ import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 
 import { useAuthStore } from '../store/authStore'
+import { useThemeStore } from '../store/themeStore'
 
 const Login = () => {
+  const { isDark, toggleTheme } = useThemeStore()
   const [email, setEmail] = useState('')
 
   const [password, setPassword] = useState('')
@@ -57,7 +61,16 @@ const Login = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-[var(--c-base)]'>
+    <div className='relative flex min-h-screen bg-[var(--c-base)]'>
+
+      {/* Theme toggle */}
+      <button
+        onClick={toggleTheme}
+        aria-label='Toggle theme'
+        className='absolute right-5 top-5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--c-border)] bg-[var(--c-surface-2)] text-[var(--c-text-2)] transition hover:border-blue-500/40 hover:text-[var(--c-text-1)]'
+      >
+        {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      </button>
 
       {/* Left Section */}
       <div className='relative hidden flex-1 overflow-hidden border-r border-[var(--c-border)] bg-gradient-to-br from-[var(--c-sidebar-from)] via-[var(--c-surface)] to-[var(--c-base)] lg:flex'>
