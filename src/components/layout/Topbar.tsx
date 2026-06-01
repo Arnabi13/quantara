@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { Search, LogOut, User, Sun, Moon } from 'lucide-react'
+import { Search, LogOut, User, Sun, Moon, Wifi, WifiOff } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import { useThemeStore } from '../../store/themeStore'
 import { api } from '../../lib/api'
 import NotificationBell from './NotificationBell'
+import { useConnectionStatus } from '../../hooks/useBinanceSocket'
 
 interface ProfileResponse {
   firstName?: string
@@ -19,6 +20,7 @@ const Topbar = () => {
   const [open, setOpen] = useState(false)
   const [profile, setProfile] = useState<ProfileResponse | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const status = useConnectionStatus()
 
   useEffect(() => {
     api.get<ProfileResponse>('/auth/profile').then((res) => setProfile(res.data)).catch(() => {})
@@ -68,6 +70,26 @@ const Topbar = () => {
 
       {/* Right */}
       <div className='flex items-center gap-4'>
+
+        {/* Live connection badge */}
+        <button
+          onClick={() => navigate('/crypto')}
+          title='Go to Crypto Markets'
+          className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition ${
+            status === 'connected'
+              ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20'
+              : status === 'disconnected'
+                ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20'
+                : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'
+          }`}
+        >
+          {status === 'connected'
+            ? <><span className='h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400' /><Wifi size={11} /> LIVE</>
+            : status === 'disconnected'
+              ? <><span className='h-1.5 w-1.5 rounded-full bg-red-400' /><WifiOff size={11} /> OFFLINE</>
+              : <><span className='h-1.5 w-1.5 animate-ping rounded-full bg-amber-400' /> CONN…</>
+          }
+        </button>
 
         {/* Theme toggle */}
         <button

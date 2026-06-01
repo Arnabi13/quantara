@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { api } from '../lib/api'
 import TickerStrip from '../components/markets/TickerStrip'
+import CryptoTicker from '../components/markets/CryptoTicker'
 import IndicesTable from '../components/markets/IndicesTable'
 import MarketMovers from '../components/markets/MarketMovers'
 import SectorHeatmap from '../components/markets/SectorHeatmap'
@@ -43,8 +44,11 @@ const Markets = () => {
         </p>
       </div>
 
-      {/* Ticker strip */}
+      {/* NSE ticker strip */}
       <TickerStrip />
+
+      {/* Live crypto ticker */}
+      <CryptoTicker />
 
       {/* Main grid: table (2/3) + movers (1/3) */}
       <div className='grid grid-cols-1 gap-6 xl:grid-cols-3'>

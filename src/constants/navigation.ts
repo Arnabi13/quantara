@@ -2,7 +2,7 @@ import {
   LayoutDashboard,
   LineChart,
   Wallet,
-  Newspaper,
+  Bitcoin,
   Settings,
 } from 'lucide-react'
 
@@ -18,14 +18,14 @@ export const navigation = [
     path: '/markets',
   },
   {
+    title: 'Crypto',
+    icon: Bitcoin,
+    path: '/crypto',
+  },
+  {
     title: 'Portfolio',
     icon: Wallet,
     path: '/portfolio',
-  },
-  {
-    title: 'News',
-    icon: Newspaper,
-    path: '/news',
   },
   {
     title: 'Settings',
