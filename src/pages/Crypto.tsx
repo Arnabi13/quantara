@@ -580,7 +580,7 @@ export default function Crypto() {
       </div>
 
       {/* ── Chart + Sidebar ─────────────────────────────────────────── */}
-      <div className='grid grid-cols-1 gap-6 xl:grid-cols-3'>
+      <div className='grid grid-cols-1 gap-6 xl:grid-cols-3 xl:items-start'>
 
         {/* Chart panel */}
         <div className='flex flex-col rounded-3xl border border-[var(--c-border)] bg-gradient-to-br from-[var(--c-surface-2)] to-[var(--c-border)] p-5 xl:col-span-2'>
@@ -738,11 +738,13 @@ export default function Crypto() {
                 {LABELS[chartSymbol] ?? chartSymbol} / USDT
               </span>
             </div>
-            <OrderBook symbol={chartSymbol} />
+            <div className='max-h-[300px] overflow-y-auto [scrollbar-color:#1E293B_transparent] [scrollbar-width:thin]'>
+              <OrderBook symbol={chartSymbol} />
+            </div>
           </div>
 
           {/* Trade Feed */}
-          <div className='flex flex-1 flex-col rounded-3xl border border-[var(--c-border)] bg-gradient-to-br from-[var(--c-surface-2)] to-[var(--c-border)] p-5'>
+          <div className='flex flex-col rounded-3xl border border-[var(--c-border)] bg-gradient-to-br from-[var(--c-surface-2)] to-[var(--c-border)] p-5'>
             <div className='mb-3 flex items-center justify-between'>
               <h3 className='text-sm font-semibold text-[var(--c-text-1)]'>Live Trades</h3>
               <div className='flex items-center gap-1.5'>
@@ -752,7 +754,7 @@ export default function Crypto() {
                 </span>
               </div>
             </div>
-            <div className='flex-1 overflow-hidden'>
+            <div className='max-h-[320px] overflow-y-auto [scrollbar-color:#1E293B_transparent] [scrollbar-width:thin]'>
               <TradeFeed symbol={chartSymbol} />
             </div>
           </div>

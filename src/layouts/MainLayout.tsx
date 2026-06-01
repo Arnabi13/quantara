@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 import Sidebar from '../components/layout/Sidebar'
 import Topbar from '../components/layout/Topbar'
+import AiChat from '../components/ai/AiChat'
 
 const MainLayout = () => {
   return (
@@ -15,6 +16,8 @@ const MainLayout = () => {
           <Outlet />
         </main>
       </div>
+
+      <AiChat />
     </div>
   )
 }
