@@ -11,11 +11,18 @@ import StockDetail from "../pages/StockDetail";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import { useAuthStore } from "../store/authStore";
+import { useSettingsStore } from "../store/settingsStore";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   return <>{children}</>;
+}
+
+function DefaultPageRedirect() {
+  const defaultPage = useSettingsStore((s) => s.defaultPage);
+  if (defaultPage === "/") return <Dashboard />;
+  return <Navigate to={defaultPage} replace />;
 }
 
 export const router = createBrowserRouter([
@@ -39,7 +46,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: <DefaultPageRedirect />,
       },
 
       {

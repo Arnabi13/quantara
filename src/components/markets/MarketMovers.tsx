@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { ALL_STOCKS_DATA } from '../../data/marketsData'
 import { StockAvatar } from '../ui/StockAvatar'
+import { useSettingsStore } from '../../store/settingsStore'
 
 type Tab = 'gainers' | 'losers' | 'active'
 
-const GAINERS   = [...ALL_STOCKS_DATA].sort((a, b) => b.changeVal - a.changeVal).slice(0, 8)
-const LOSERS    = [...ALL_STOCKS_DATA].sort((a, b) => a.changeVal - b.changeVal).slice(0, 8)
-const MOST_ACTIVE = [...ALL_STOCKS_DATA].sort((a, b) => b.volume - a.volume).slice(0, 8)
+const SORTED_GAINERS   = [...ALL_STOCKS_DATA].sort((a, b) => b.changeVal - a.changeVal)
+const SORTED_LOSERS    = [...ALL_STOCKS_DATA].sort((a, b) => a.changeVal - b.changeVal)
+const SORTED_ACTIVE    = [...ALL_STOCKS_DATA].sort((a, b) => b.volume - a.volume)
 
 const TAB_LABELS: Record<Tab, string> = {
   gainers: 'Top Gainers',
@@ -14,10 +15,23 @@ const TAB_LABELS: Record<Tab, string> = {
   active:  'Most Active',
 }
 
+function formatChange(changeVal: number, priceVal: number, format: 'percent' | 'absolute' | 'both'): string {
+  const sign = changeVal >= 0 ? '+' : ''
+  const pct = `${sign}${changeVal.toFixed(2)}%`
+  const absChange = Math.abs(priceVal * changeVal / 100)
+  const absStr = `${changeVal >= 0 ? '+' : '-'}₹${absChange.toFixed(2)}`
+  if (format === 'absolute') return absStr
+  if (format === 'both') return `${pct} · ${absStr}`
+  return pct
+}
+
 export default function MarketMovers({ onSelect }: { onSelect: (symbol: string) => void }) {
   const [tab, setTab] = useState<Tab>('gainers')
+  const moversCount = useSettingsStore((s) => s.moversCount)
+  const priceChangeFormat = useSettingsStore((s) => s.priceChangeFormat)
 
-  const items = tab === 'gainers' ? GAINERS : tab === 'losers' ? LOSERS : MOST_ACTIVE
+  const sorted = tab === 'gainers' ? SORTED_GAINERS : tab === 'losers' ? SORTED_LOSERS : SORTED_ACTIVE
+  const items = sorted.slice(0, moversCount)
 
   return (
     <div className='flex flex-col rounded-3xl border border-[var(--c-border)] bg-gradient-to-br from-[var(--c-surface-2)] to-[var(--c-border)] p-5'>
@@ -47,19 +61,15 @@ export default function MarketMovers({ onSelect }: { onSelect: (symbol: string) 
             className='flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-[var(--c-overlay)]'
           >
             <span className='w-4 shrink-0 text-right text-xs text-[var(--c-text-3)]'>{i + 1}</span>
-            <StockAvatar symbol={stock.symbol} size="sm" />
+            <StockAvatar symbol={stock.symbol} size='sm' />
             <div className='min-w-0 flex-1'>
               <p className='text-sm font-semibold text-[var(--c-text-1)]'>{stock.symbol}</p>
               <p className='truncate text-[11px] text-[var(--c-text-3)]'>{stock.sector}</p>
             </div>
             <div className='shrink-0 text-right'>
               <p className='text-sm font-semibold text-[var(--c-text-1)]'>{stock.price}</p>
-              <p
-                className={`text-xs font-semibold ${
-                  stock.positive ? 'text-emerald-400' : 'text-red-400'
-                }`}
-              >
-                {stock.change}
+              <p className={`text-xs font-semibold ${stock.positive ? 'text-emerald-400' : 'text-red-400'}`}>
+                {formatChange(stock.changeVal, stock.priceVal, priceChangeFormat)}
               </p>
             </div>
           </button>

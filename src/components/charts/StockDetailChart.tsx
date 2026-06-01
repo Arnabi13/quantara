@@ -10,6 +10,7 @@ import {
 } from 'lightweight-charts'
 import { generateCandlestickData } from '../../data/stockDataGenerator'
 import { useThemeStore } from '../../store/themeStore'
+import { useSettingsStore } from '../../store/settingsStore'
 
 const TIMEFRAMES = ['1W', '1M', '3M', '6M', 'All'] as const
 type Timeframe = (typeof TIMEFRAMES)[number]
@@ -59,7 +60,8 @@ export default function StockDetailChart({ symbol }: { symbol: string }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<IChartApi | null>(null)
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null)
-  const [timeframe, setTimeframe] = useState<Timeframe>('3M')
+  const defaultTimeframe = useSettingsStore((s) => s.defaultTimeframe)
+  const [timeframe, setTimeframe] = useState<Timeframe>(defaultTimeframe)
   const [lastCandle, setLastCandle] = useState<CandlestickData | null>(null)
   const isDark = useThemeStore((s) => s.isDark)
 
