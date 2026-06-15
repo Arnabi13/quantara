@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
-import { api } from '../lib/api'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { api, API_BASE_URL } from '../lib/api'
+import { useAuthStore } from '../store/authStore'
 
 export interface AppNotification {
   id: string
@@ -19,10 +20,10 @@ export interface AppAlert {
   triggeredAt: string | null
 }
 
-const POLL_MS = 30_000
-
 export function useNotifications() {
+  const token = useAuthStore((s) => s.token)
   const [notifications, setNotifications] = useState<AppNotification[]>([])
+  const esRef = useRef<EventSource | null>(null)
 
   const refresh = useCallback(async () => {
     try {
@@ -32,10 +33,31 @@ export function useNotifications() {
   }, [])
 
   useEffect(() => {
+    // Load existing notifications on mount
     refresh()
-    const id = setInterval(refresh, POLL_MS)
-    return () => clearInterval(id)
-  }, [refresh])
+
+    if (!token) return
+
+    // Open SSE stream — EventSource reconnects automatically on network drops
+    const es = new EventSource(`${API_BASE_URL}/notifications/stream?token=${token}`)
+    esRef.current = es
+
+    es.onmessage = (e) => {
+      try {
+        const incoming = JSON.parse(e.data) as AppNotification
+        setNotifications((prev) => {
+          // Guard against duplicate delivery on reconnect
+          if (prev.some((n) => n.id === incoming.id)) return prev
+          return [incoming, ...prev]
+        })
+      } catch { /* malformed frame */ }
+    }
+
+    return () => {
+      es.close()
+      esRef.current = null
+    }
+  }, [token, refresh])
 
   const markRead = useCallback(async (id: string) => {
     await api.patch(`/notifications/${id}/read`)

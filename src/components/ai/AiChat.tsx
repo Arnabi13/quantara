@@ -5,6 +5,7 @@ import {
   BarChart2, Trash2, TrendingUp, Globe, BookOpen, Activity,
 } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
+import { API_BASE_URL } from '../../lib/api'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -126,14 +127,20 @@ export default function AiChat() {
     abortRef.current = controller
 
     try {
-      const res = await fetch('http://localhost:4000/ai/chat', {
+      const res = await fetch(`${API_BASE_URL}/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ message: trimmed, history }),
         signal: controller.signal,
       })
 
-      if (!res.ok || !res.body) throw new Error('Request failed')
+      if (!res.ok) {
+        const errorMsg = res.status === 401
+          ? 'Session expired — please log in again'
+          : `Server error (${res.status}) — try again`
+        throw Object.assign(new Error(errorMsg), { isHttpError: true, status: res.status })
+      }
+      if (!res.body) throw new Error('Request failed')
 
       const reader  = res.body.getReader()
       const decoder = new TextDecoder()
@@ -181,10 +188,12 @@ export default function AiChat() {
       }
     } catch (err: unknown) {
       if (err instanceof Error && err.name !== 'AbortError') {
+        const isHttpError = (err as Error & { isHttpError?: boolean }).isHttpError
+        const content = isHttpError
+          ? err.message
+          : 'Could not reach Quantara AI — is the backend running?'
         setMessages((prev) => prev.map((m) =>
-          m.id === assistantId
-            ? { ...m, content: 'Could not reach Quantara AI — is the backend running?', streaming: false }
-            : m,
+          m.id === assistantId ? { ...m, content, streaming: false } : m,
         ))
       }
     } finally {
@@ -210,7 +219,7 @@ export default function AiChat() {
         onClick={() => setOpen((v) => !v)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.93 }}
-        className='fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-xl shadow-blue-700/40'
+        className='fixed bottom-6 right-3 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-xl shadow-blue-700/40 sm:right-6'
         title='Quantara AI'
       >
         <AnimatePresence mode='wait'>
@@ -233,8 +242,11 @@ export default function AiChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.94 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className='fixed bottom-24 right-6 z-50 flex flex-col overflow-hidden rounded-3xl border border-[#1E293B] bg-[#080F1E] shadow-2xl shadow-black/60'
-            style={{ width: 440, height: 620 }}
+            className='fixed bottom-24 right-3 z-50 flex flex-col overflow-hidden rounded-3xl border border-[#1E293B] bg-[#080F1E] shadow-2xl shadow-black/60 sm:right-6'
+            style={{
+              width: 'min(440px, calc(100vw - 1.5rem))',
+              height: 'min(620px, calc(100vh - 7.5rem))',
+            }}
           >
 
             {/* Header */}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { io, Socket } from 'socket.io-client'
+import { API_BASE_URL } from '../lib/api'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -47,7 +48,7 @@ let _socket: Socket | null = null
 
 function getSocket(): Socket {
   if (!_socket) {
-    _socket = io('http://localhost:4000/market', {
+    _socket = io(`${API_BASE_URL}/market`, {
       transports: ['websocket'],
       autoConnect: true,
       reconnection: true,
