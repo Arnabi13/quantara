@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   Moon, Sun, User, Lock, LayoutDashboard, BarChart2, Bell,
-  Check, ChevronDown, Eye, EyeOff, Loader2,
+  Check, Eye, EyeOff, Loader2,
 } from 'lucide-react'
 import { useThemeStore } from '../store/themeStore'
 import { useAuthStore } from '../store/authStore'
